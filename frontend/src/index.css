@@ -14,3 +14,96 @@ body {
   background-color: #f5f5f5;
   color: #1f2937;
 }
+
+/* -------------------------------------------------------------------------- */
+/*  Auth pages — page-load fade + slide animations                             */
+/*  Keeps the auth flow feeling premium without external animation libs.       */
+/* -------------------------------------------------------------------------- */
+
+@keyframes auth-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes auth-fade-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes auth-fade-slide-right {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes auth-fade-slide-left {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes auth-float-slow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.auth-fade-in {
+  animation: auth-fade-in 0.6s ease-out both;
+}
+
+.auth-fade-slide-up {
+  animation: auth-fade-slide-up 0.6s ease-out both;
+}
+
+.auth-fade-slide-right {
+  animation: auth-fade-slide-right 0.7s ease-out both;
+}
+
+.auth-fade-slide-left {
+  animation: auth-fade-slide-left 0.7s ease-out both;
+}
+
+.auth-float-slow {
+  animation: auth-float-slow 6s ease-in-out infinite;
+}
+
+/* Slight stagger helpers for the branding-panel feature blocks. */
+.auth-stagger-1 { animation-delay: 0.1s; }
+.auth-stagger-2 { animation-delay: 0.2s; }
+.auth-stagger-3 { animation-delay: 0.3s; }
+.auth-stagger-4 { animation-delay: 0.4s; }
+
+/* Respect user motion preferences. */
+@media (prefers-reduced-motion: reduce) {
+  .auth-fade-in,
+  .auth-fade-slide-up,
+  .auth-fade-slide-right,
+  .auth-fade-slide-left,
+  .auth-float-slow {
+    animation: none !important;
+  }
+}

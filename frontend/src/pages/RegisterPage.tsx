@@ -1,7 +1,17 @@
 import { FormEvent, useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
+import {
+    ArrowRightCircleIcon,
+    EnvelopeIcon,
+    ExclamationCircleIcon,
+    LockClosedIcon,
+    UserPlusIcon,
+    UserIcon,
+} from '@heroicons/react/24/outline';
 import { useAuth } from '../context/AuthContext';
+import AuthLayout from '../components/AuthLayout';
+import { AuthField, PasswordField } from '../components/AuthField';
 
 /**
  * Same logic as the login page: surface the real error from the API
@@ -71,80 +81,109 @@ export default function RegisterPage() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 to-slate-700 p-4">
-            <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8">
-                <div className="text-center mb-6">
-                    <div className="text-4xl">🚗</div>
-                    <h1 className="text-2xl font-bold text-gray-800 mt-2">Create an account</h1>
-                    <p className="text-sm text-gray-500">Start managing recovery cases</p>
+        <AuthLayout
+            title="Create account"
+            subtitle="Join us and start managing your recovery cases."
+        >
+            <div className="text-center mb-7">
+                <div className="mx-auto h-12 w-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
+                    <UserPlusIcon className="h-6 w-6" />
                 </div>
-
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
-                        <input
-                            type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            required
-                            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500"
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                        <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500"
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                            minLength={8}
-                            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500"
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Confirm password</label>
-                        <input
-                            type="password"
-                            value={passwordConfirmation}
-                            onChange={(e) => setPasswordConfirmation(e.target.value)}
-                            required
-                            minLength={8}
-                            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500"
-                        />
-                    </div>
-
-                    {error && (
-                        <div className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-3 py-2">
-                            {error}
-                        </div>
-                    )}
-
-                    <button
-                        type="submit"
-                        disabled={submitting}
-                        className="w-full bg-slate-800 hover:bg-slate-900 text-white font-medium py-2 rounded-lg transition disabled:opacity-50"
-                    >
-                        {submitting ? 'Creating account…' : 'Create account'}
-                    </button>
-                </form>
-
-                <p className="text-sm text-gray-500 text-center mt-4">
-                    Already have an account?{' '}
-                    <Link to="/login" className="text-slate-800 font-medium hover:underline">
-                        Sign in
-                    </Link>
+                <h2 className="mt-4 text-xl font-bold text-slate-900">Create your account</h2>
+                <p className="mt-1 text-sm text-slate-500">
+                    Fill in the details to get started
                 </p>
             </div>
-        </div>
+
+            <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+                <AuthField
+                    label="Full name"
+                    type="text"
+                    name="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    autoComplete="name"
+                    placeholder="Enter your full name"
+                    leadingIcon={<UserIcon className="h-[1.125rem] w-[1.125rem]" />}
+                    invalid={Boolean(error)}
+                />
+
+                <AuthField
+                    label="Email address"
+                    type="email"
+                    name="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    autoComplete="email"
+                    placeholder="Enter your email"
+                    leadingIcon={<EnvelopeIcon className="h-[1.125rem] w-[1.125rem]" />}
+                    invalid={Boolean(error)}
+                />
+
+                <PasswordField
+                    label="Password"
+                    name="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    minLength={8}
+                    autoComplete="new-password"
+                    placeholder="Create a password"
+                    leadingIcon={<LockClosedIcon className="h-[1.125rem] w-[1.125rem]" />}
+                    invalid={Boolean(error)}
+                />
+
+                <PasswordField
+                    label="Confirm password"
+                    name="password_confirmation"
+                    value={passwordConfirmation}
+                    onChange={(e) => setPasswordConfirmation(e.target.value)}
+                    required
+                    minLength={8}
+                    autoComplete="new-password"
+                    placeholder="Confirm your password"
+                    leadingIcon={<LockClosedIcon className="h-[1.125rem] w-[1.125rem]" />}
+                    invalid={Boolean(error)}
+                />
+
+                {error && (
+                    <div
+                        role="alert"
+                        className="flex items-start gap-2 bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl px-3 py-2.5"
+                    >
+                        <ExclamationCircleIcon className="h-5 w-5 shrink-0 mt-0.5" />
+                        <span>{error}</span>
+                    </div>
+                )}
+
+                <button
+                    type="submit"
+                    disabled={submitting}
+                    className={[
+                        'w-full inline-flex items-center justify-center gap-2',
+                        'bg-blue-600 hover:bg-blue-700 active:bg-blue-800',
+                        'text-white text-sm font-semibold py-2.5 rounded-xl',
+                        'shadow-sm shadow-blue-600/30',
+                        'disabled:opacity-60 disabled:cursor-not-allowed',
+                        'transition focus:outline-none focus:ring-2 focus:ring-blue-500/40',
+                    ].join(' ')}
+                >
+                    {submitting ? 'Creating account…' : 'Create account'}
+                    {!submitting && <ArrowRightCircleIcon className="h-5 w-5" />}
+                </button>
+            </form>
+
+            <p className="text-sm text-slate-500 text-center mt-5">
+                Already have an account?{' '}
+                <Link
+                    to="/login"
+                    className="text-blue-600 hover:text-blue-700 font-semibold transition"
+                >
+                    Sign in
+                </Link>
+            </p>
+        </AuthLayout>
     );
 }
