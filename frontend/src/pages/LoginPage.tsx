@@ -166,19 +166,7 @@ export default function LoginPage() {
                 </Link>
             </p>
 
-            <div className="mt-6 border-t border-slate-200 pt-4 text-xs text-slate-500">
-                <p className="font-semibold mb-1 text-slate-600">Demo accounts (seeded):</p>
-                <ul className="space-y-0.5">
-                    <li>
-                        <code className="text-slate-700">admin@autorecov.test</code>{' '}
-                        / <code className="text-slate-700">password</code>
-                    </li>
-                    <li>
-                        <code className="text-slate-700">agent@autorecov.test</code>{' '}
-                        / <code className="text-slate-700">password123</code>
-                    </li>
-                </ul>
-            </div>
+            
         </AuthLayout>
     );
 }
